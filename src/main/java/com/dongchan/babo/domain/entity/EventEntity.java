@@ -29,7 +29,4 @@ public class EventEntity extends BaseTimeEntity {
     private String location;
 
     private LocalDate planedDt;
-
-    @CreatedDate
-    private LocalDate createdTime;
 }

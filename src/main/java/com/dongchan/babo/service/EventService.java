@@ -10,4 +10,6 @@ import org.springframework.stereotype.Service;
 public class EventService {
     private final ApplicantRepository applicantRepository;
     private final EventRepository eventRepository;
+
+    public void
 }

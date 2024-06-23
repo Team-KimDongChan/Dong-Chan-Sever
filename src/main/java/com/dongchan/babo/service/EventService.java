@@ -36,4 +36,8 @@ public class EventService {
         event.modify(req.title(),req.content(),req.location(),req.planedDt());
         eventRepository.save(event);
     }
+
+    public void delete(Long id){
+        eventRepository.deleteById(id);
+    }
 }

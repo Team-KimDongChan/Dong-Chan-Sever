@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ApplicantReq {
-    private Long memberId;
+    private String memberId;
     private Long eventId;
 }

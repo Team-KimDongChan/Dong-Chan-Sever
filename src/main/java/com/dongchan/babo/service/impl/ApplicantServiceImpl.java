@@ -8,28 +8,23 @@ import com.dongchan.babo.repository.ApplicantRepository;
 import com.dongchan.babo.repository.EventRepository;
 import com.dongchan.babo.repository.MemberRepository;
 import com.dongchan.babo.service.ApplicantService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class ApplicantServiceImpl implements ApplicantService {
 
     private final ApplicantRepository applicantRepository;
     private final MemberRepository memberRepository;
     private final EventRepository eventRepository;
 
-    @Autowired
-    public ApplicantServiceImpl(ApplicantRepository applicantRepository, MemberRepository memberRepository, EventRepository eventRepository) {
-        this.applicantRepository = applicantRepository;
-        this.memberRepository = memberRepository;
-        this.eventRepository = eventRepository;
-    }
-
     @Override
     @Transactional
     public void saveApplicant(ApplicantReq request) {
-        MemberEntity member = (MemberEntity) memberRepository.findById(String.valueOf(request.getMemberId()))
+        MemberEntity member = memberRepository.findByEmail(request.getMemberId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid member ID: " + request.getMemberId()));
         EventEntity event = eventRepository.findById(request.getEventId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid event ID: " + request.getEventId()));

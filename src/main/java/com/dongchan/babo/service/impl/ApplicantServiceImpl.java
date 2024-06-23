@@ -8,6 +8,7 @@ import com.dongchan.babo.repository.ApplicantRepository;
 import com.dongchan.babo.repository.EventRepository;
 import com.dongchan.babo.repository.MemberRepository;
 import com.dongchan.babo.service.ApplicantService;
+import jdk.jfr.Event;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,4 +37,11 @@ public class ApplicantServiceImpl implements ApplicantService {
 
         applicantRepository.save(applicant);
     }
+
+    @Override
+    @Transactional
+    public void cancelApplicant(ApplicantReq req) {
+        eventRepository.deleteByApplicantId(req.getMemberId());
+    }
+
 }

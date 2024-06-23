@@ -4,4 +4,5 @@ import com.dongchan.babo.api.req.ApplicantReq;
 
 public interface ApplicantService {
     void saveApplicant(ApplicantReq request);
+    void cancelApplicant(ApplicantReq req);
 }

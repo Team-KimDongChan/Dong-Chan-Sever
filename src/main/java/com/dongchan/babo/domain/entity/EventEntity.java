@@ -29,4 +29,11 @@ public class EventEntity extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_member_id")
     private MemberEntity registerMember;
+
+    public void modify(String title, String content, String location, LocalDate planedDt){
+        this.title=title;
+        this.content=content;
+        this.location=location;
+        this.planedDt=planedDt;
+    }
 }

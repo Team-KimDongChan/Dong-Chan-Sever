@@ -32,6 +32,8 @@ public class EventService {
     }
 
     public void modify(EventWithIdReq req){
-
+        EventEntity event = eventRepository.findById(req.id()).get();
+        event.modify(req.title(),req.content(),req.location(),req.planedDt());
+        eventRepository.save(event);
     }
 }

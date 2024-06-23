@@ -1,13 +1,11 @@
 package com.dongchan.babo.domain.entity;
 
 import com.dongchan.babo.common.BaseTimeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.lang.reflect.Member;
 import java.time.LocalDate;
 
 @Getter
@@ -24,12 +22,18 @@ public class EventEntity extends BaseTimeEntity {
 
     private String content;
 
-    private String registerId;
-
     private String location;
 
     private LocalDate planedDt;
 
-    @CreatedDate
-    private LocalDate createdTime;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_member_id")
+    private MemberEntity registerMember;
+
+    public void modify(String title, String content, String location, LocalDate planedDt){
+        this.title=title;
+        this.content=content;
+        this.location=location;
+        this.planedDt=planedDt;
+    }
 }

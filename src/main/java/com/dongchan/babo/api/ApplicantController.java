@@ -19,4 +19,9 @@ public class ApplicantController {
         applicantService.saveApplicant(request);
         return ResponseEntity.ok("Applicant saved successfully");
     }
+
+    @DeleteMapping
+    public void deleteApplicant(@RequestBody ApplicantReq req){
+        applicantService.cancelApplicant(req);
+    }
 }

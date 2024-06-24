@@ -10,6 +10,7 @@ import com.dongchan.babo.security.MemberMapper;
 import com.dongchan.babo.security.UserSecurity;
 import com.dongchan.babo.service.res.EventRes;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +29,12 @@ public class EventService {
         eventRepository.save(req.toEntity(MemberEntity.builder().build()));
     }
 
-    public List<EventRes> getList(){
+    public ResponseEntity<List<EventRes>> getList(){
         List<EventEntity> eventList = eventRepository.findAll();
-        return eventList.stream()
+        List<EventRes> res = eventList.stream()
                 .map(EventRes::of)
                 .toList();
+        return ResponseEntity.ok(res);
     }
 
     public void modify(EventWithIdReq req){

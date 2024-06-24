@@ -6,6 +6,7 @@ import com.dongchan.babo.service.EventService;
 import com.dongchan.babo.service.res.EventRes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class EventController {
     }
 
     @GetMapping
-    public List<EventRes> get(){
+    public ResponseEntity<List<EventRes>> get(){
         return eventService.getList();
     }
 

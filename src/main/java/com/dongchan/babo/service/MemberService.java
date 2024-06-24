@@ -38,7 +38,7 @@ public class MemberService {
         }
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        MemberRes user = ((CustomUserDetails) authenticate.getPrincipal()).getMember();
+        MemberVO user = ((CustomUserDetails) authenticate.getPrincipal()).getMember();
         return JsonWebTokenResponse.builder()
                 .accessToken(jwtProvider.generateAccessToken(user.getEmail(), user.getRole()))
                 .refreshToken(jwtProvider.generateRefreshToken(user.getEmail(), user.getRole()))

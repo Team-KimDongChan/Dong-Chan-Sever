@@ -1,7 +1,7 @@
 package com.dongchan.babo.security;
 
 import com.dongchan.babo.repository.MemberRepository;
-import com.dongchan.babo.service.MemberRes;
+import com.dongchan.babo.service.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ public class AuthDetailsService implements UserDetailsService {
     private final MemberMapper memberMapper;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        MemberRes user = memberRepository
+        MemberVO user = memberRepository
                 .findByEmail(email).map(memberMapper::toUser)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return CustomUserDetails.create(user);

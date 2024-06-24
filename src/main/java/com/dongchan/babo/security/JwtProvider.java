@@ -4,7 +4,7 @@ import com.dongchan.babo.domain.enums.Role;
 import com.dongchan.babo.repository.MemberRepository;
 import com.dongchan.babo.security.config.JwtType;
 import com.dongchan.babo.security.properties.JwtProperties;
-import com.dongchan.babo.service.MemberRes;
+import com.dongchan.babo.service.MemberVO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
@@ -71,7 +71,7 @@ public class JwtProvider {
             throw new RuntimeException("Invalid token");
         }
 
-        MemberRes user = memberRepository.findByEmail(claims.getBody().getSubject()).map(memberMapper::toUser).orElseThrow(() -> new RuntimeException("User Not found"));
+        MemberVO user = memberRepository.findByEmail(claims.getBody().getSubject()).map(memberMapper::toUser).orElseThrow(() -> new RuntimeException("User Not found"));
 
         final CustomUserDetails details = new CustomUserDetails(user);
 

@@ -27,7 +27,7 @@ public class EventController {
     }
 
     @PatchMapping
-    public void modify(EventWithIdReq req){
+    public void modify(@RequestBody @Valid EventWithIdReq req){
         eventService.modify(req);
     }
 

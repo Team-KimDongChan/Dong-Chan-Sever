@@ -2,6 +2,8 @@ package com.dongchan.babo.api;
 
 import com.dongchan.babo.api.req.EventReq;
 import com.dongchan.babo.api.req.EventWithIdReq;
+import com.dongchan.babo.common.Response;
+import com.dongchan.babo.common.ResponseData;
 import com.dongchan.babo.service.EventService;
 import com.dongchan.babo.service.res.EventRes;
 import jakarta.validation.Valid;
@@ -18,22 +20,22 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public void register(@RequestBody @Valid EventReq req){
-        eventService.register(req);
+    public Response register(@RequestBody @Valid EventReq req){
+        return eventService.register(req);
     }
 
     @GetMapping
-    public ResponseEntity<List<EventRes>> get(){
+    public ResponseData<List<EventRes>> get(){
         return eventService.getList();
     }
 
     @PatchMapping
-    public void modify(@RequestBody @Valid EventWithIdReq req){
-        eventService.modify(req);
+    public Response modify(@RequestBody @Valid EventWithIdReq req){
+        return eventService.modify(req);
     }
 
     @DeleteMapping
-    public void delete(@RequestParam Long id){
-        eventService.delete(id);
+    public Response delete(@RequestParam Long id){
+        return eventService.delete(id);
     }
 }

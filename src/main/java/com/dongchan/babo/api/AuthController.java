@@ -3,6 +3,8 @@ package com.dongchan.babo.api;
 import com.dongchan.babo.api.req.AuthReq;
 import com.dongchan.babo.api.req.MemberReq;
 import com.dongchan.babo.api.req.RefreshTokenReq;
+import com.dongchan.babo.common.Response;
+import com.dongchan.babo.common.ResponseData;
 import com.dongchan.babo.service.JsonWebTokenResponse;
 import com.dongchan.babo.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,18 +22,18 @@ public class AuthController {
     private final MemberService memberService;
 
     @PostMapping("/sign")
-    public JsonWebTokenResponse sign(@RequestBody AuthReq req){
+    public ResponseData<JsonWebTokenResponse> sign(@RequestBody AuthReq req){
         return memberService.auth(req);
     }
 
-    @PostMapping("/signUp")
-    public void signUp(@RequestBody MemberReq req){
-        memberService.signup(req);
+    @PostMapping("/sign-up")
+    public Response signUp(@RequestBody MemberReq req){
+        return memberService.signup(req);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<JsonWebTokenResponse> refresh(@Validated @RequestBody RefreshTokenReq refreshTokenRequest) {
-        return ResponseEntity.ok(memberService.refresh(refreshTokenRequest.getRefreshToken()));
+    public ResponseData<JsonWebTokenResponse> refresh(@Validated @RequestBody RefreshTokenReq refreshTokenRequest) {
+        return memberService.refresh(refreshTokenRequest.getRefreshToken());
     }
 
 }

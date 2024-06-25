@@ -1,8 +1,11 @@
 package com.dongchan.babo.api;
 
 import com.dongchan.babo.api.req.ApplicantReq;
+import com.dongchan.babo.common.Response;
+import com.dongchan.babo.common.ResponseData;
 import com.dongchan.babo.service.ApplicantService;
 import com.dongchan.babo.service.res.MemberRes;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,18 +26,17 @@ public class ApplicantController {
     private final ApplicantService applicantService;
 
     @PostMapping
-    public ResponseEntity<String> createApplicant(@RequestBody ApplicantReq request) {
-        applicantService.saveApplicant(request);
-        return ResponseEntity.ok("Applicant saved successfully");
+    public Response createApplicant(@RequestBody @Valid ApplicantReq request) {
+        return applicantService.saveApplicant(request);
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberRes>> getApplicant(@RequestParam Long id) {
+    public ResponseData<List<MemberRes>> getApplicant(@RequestParam @Valid Long id) {
         return applicantService.getApplicant(id);
     }
 
     @DeleteMapping
-    public void deleteApplicant(@RequestBody ApplicantReq req){
-        applicantService.cancelApplicant(req);
+    public Response deleteApplicant(@RequestBody @Valid ApplicantReq req){
+        return applicantService.cancelApplicant(req);
     }
 }

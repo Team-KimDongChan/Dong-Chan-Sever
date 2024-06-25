@@ -2,6 +2,8 @@ package com.dongchan.babo.service;
 
 import com.dongchan.babo.api.req.AuthReq;
 import com.dongchan.babo.api.req.MemberReq;
+import com.dongchan.babo.common.Response;
+import com.dongchan.babo.common.ResponseData;
 import com.dongchan.babo.domain.entity.MemberEntity;
 import com.dongchan.babo.domain.enums.Role;
 import com.dongchan.babo.repository.MemberRepository;
@@ -26,11 +28,12 @@ public class MemberService {
     private final JwtProvider jwtProvider;
     private final MemberMapper memberMapper;
 
-    public void signup(MemberReq request) {
+    public Response signup(MemberReq request) {
        memberRepository.save(memberMapper.createUserEntity(request));
+       return Response.created("회원가입 성공");
     }
 
-    public JsonWebTokenResponse auth(AuthReq request) {
+    public ResponseData<JsonWebTokenResponse> auth(AuthReq request) {
         MemberEntity userEntity = memberRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
         if (!new BCryptPasswordEncoder().matches(request.getPassword(),userEntity.getPassword())){
@@ -39,21 +42,23 @@ public class MemberService {
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         MemberVO user = ((CustomUserDetails) authenticate.getPrincipal()).getMember();
-        return JsonWebTokenResponse.builder()
+        JsonWebTokenResponse token = JsonWebTokenResponse.builder()
                 .accessToken(jwtProvider.generateAccessToken(user.getEmail(), user.getRole()))
                 .refreshToken(jwtProvider.generateRefreshToken(user.getEmail(), user.getRole()))
                 .build();
+        return ResponseData.ok("로그인 성공", token);
     }
 
-    public JsonWebTokenResponse refresh(String token) {
+    public ResponseData<JsonWebTokenResponse> refresh(String token) {
         Jws<Claims> claims = jwtProvider.getClaims(jwtProvider.extractToken(token));
         if (jwtProvider.isWrongType(claims, JwtType.REFRESH)) {
             throw new RuntimeException("Refresh Token Error");
         }
-        return JsonWebTokenResponse.builder()
+        JsonWebTokenResponse tokenRes = JsonWebTokenResponse.builder()
                 .accessToken(jwtProvider.generateAccessToken(claims.getBody().getSubject(), (Role) claims.getHeader().get("authority")))
                 .refreshToken(jwtProvider.generateRefreshToken(claims.getBody().getSubject(), (Role) claims.getHeader().get("authority")))
                 .build();
+        return ResponseData.ok("토큰 재발급 성공", tokenRes);
     }
 
 }

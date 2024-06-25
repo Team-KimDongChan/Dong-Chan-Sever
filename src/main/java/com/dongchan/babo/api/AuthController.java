@@ -20,12 +20,12 @@ public class AuthController {
     private final MemberService memberService;
 
     @PostMapping("/sign")
-    public void sign(AuthReq req){
-        memberService.auth(req);
+    public JsonWebTokenResponse sign(@RequestBody AuthReq req){
+        return memberService.auth(req);
     }
 
     @PostMapping("/signUp")
-    public void signUp(MemberReq req){
+    public void signUp(@RequestBody MemberReq req){
         memberService.signup(req);
     }
 

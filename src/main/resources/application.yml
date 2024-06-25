@@ -19,6 +19,6 @@ spring:
         format_sql: true
 application:
   jwt:
-    secretKey: 25432A462D4A614E645267556A586E3272357538782F413F4428472B4B625065
+    secretKey: ed4667fac1ca35c325e7298c05cd71e8f7d0ae5b46b48c3956cdc9b587ca5d0e
     expiration: 43200000   # 12시간
     refreshExpiration: 604800000  # 7일

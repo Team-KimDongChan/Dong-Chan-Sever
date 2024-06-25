@@ -1,6 +1,5 @@
 package com.dongchan.babo.api.req;
 
-import com.dongchan.babo.domain.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 

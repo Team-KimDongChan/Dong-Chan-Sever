@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ApplicantRepository extends JpaRepository<ApplicantEntity, Long> {
     List<ApplicantEntity> findByEventId(Long id);
+    void deleteByEventIdAndEmail(Long id);
 }

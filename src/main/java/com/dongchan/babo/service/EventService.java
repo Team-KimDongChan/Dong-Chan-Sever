@@ -4,7 +4,6 @@ import com.dongchan.babo.api.req.EventReq;
 import com.dongchan.babo.api.req.EventWithIdReq;
 import com.dongchan.babo.domain.entity.EventEntity;
 import com.dongchan.babo.domain.entity.MemberEntity;
-import com.dongchan.babo.repository.ApplicantRepository;
 import com.dongchan.babo.repository.EventRepository;
 import com.dongchan.babo.security.MemberMapper;
 import com.dongchan.babo.security.UserSecurity;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Service
@@ -26,7 +24,7 @@ public class EventService {
     private final UserSecurity userSecurity;
 
     public void register(EventReq req){
-        eventRepository.save(req.toEntity(MemberEntity.builder().build()));
+        eventRepository.save(req.toEntity(memberMapper.toEntity(userSecurity.getUser())));
     }
 
     public ResponseEntity<List<EventRes>> getList(){

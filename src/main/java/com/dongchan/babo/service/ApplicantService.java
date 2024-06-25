@@ -9,4 +9,5 @@ import java.util.List;
 public interface ApplicantService {
     void saveApplicant(ApplicantReq request);
     ResponseEntity<List<MemberRes>> getApplicant(Long id);
+    void cancelApplicant(ApplicantReq req);
 }

@@ -26,5 +26,9 @@ public class ApplicantController {
     @GetMapping
     public ResponseEntity<List<MemberRes>> getApplicant(@RequestParam Long id){
         return applicantService.getApplicant(id);
+  
+    @DeleteMapping
+    public void deleteApplicant(@RequestBody ApplicantReq req){
+        applicantService.cancelApplicant(req);
     }
 }

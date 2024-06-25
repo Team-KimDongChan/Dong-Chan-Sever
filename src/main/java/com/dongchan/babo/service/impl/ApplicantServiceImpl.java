@@ -11,6 +11,7 @@ import com.dongchan.babo.security.MemberMapper;
 import com.dongchan.babo.security.UserSecurity;
 import com.dongchan.babo.service.ApplicantService;
 import com.dongchan.babo.service.res.MemberRes;
+import jdk.jfr.Event;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,4 +53,11 @@ public class ApplicantServiceImpl implements ApplicantService {
                 .map(applicant -> MemberRes.of(memberMapper.toUser(applicant.getMember())))
                 .toList());
     }
+
+    @Override
+    @Transactional
+    public void cancelApplicant(ApplicantReq req) {
+        eventRepository.deleteByApplicantId(req.getMemberId());
+    }
+
 }

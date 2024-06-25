@@ -3,24 +3,24 @@ package com.dongchan.babo.security;
 import com.dongchan.babo.api.req.MemberReq;
 import com.dongchan.babo.domain.entity.MemberEntity;
 import com.dongchan.babo.domain.enums.Role;
-import com.dongchan.babo.service.MemberRes;
+import com.dongchan.babo.service.MemberVO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MemberMapper {
 
-    public MemberEntity toCreate(String name, String email, String password){
+    public MemberEntity toEntity(MemberVO member){
         return MemberEntity.builder()
-                .email(email)
-                .name(name)
-                .password(password)
+                .email(member.getEmail())
+                .name(member.getName())
+                .password(member.getPassword())
                 .role(Role.USER)
                 .build();
     }
 
-    public MemberRes toUser(MemberEntity entity){
-        return MemberRes.builder()
+    public MemberVO toUser(MemberEntity entity){
+        return MemberVO.builder()
                 .email(entity.getEmail())
                 .name(entity.getName())
                 .password(entity.getPassword())

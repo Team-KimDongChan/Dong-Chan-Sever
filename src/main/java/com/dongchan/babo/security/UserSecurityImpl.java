@@ -1,6 +1,6 @@
 package com.dongchan.babo.security;
 
-import com.dongchan.babo.service.MemberRes;
+import com.dongchan.babo.service.MemberVO;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class UserSecurityImpl implements UserSecurity{
 
     @Override
-    public MemberRes getUser() {
+    public MemberVO getUser() {
         return ((CustomUserDetails) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
